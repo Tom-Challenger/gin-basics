@@ -74,6 +74,7 @@ func (h *Handler) UpdateEmployee(c *gin.Context) {
 func (h *Handler) GetEmployee(c *gin.Context) {
 	id, err := strconv.Atoi(c.Param("id"))
 
+	// Проверяем что в параметре запроса есть обязательное поле
 	if err != nil {
 		fmt.Printf("failed to convert id param to int: %s\n", err.Error())
 		c.JSON(http.StatusBadRequest, ErrorResponse{
@@ -93,6 +94,21 @@ func (h *Handler) GetEmployee(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, employee)
+}
+
+func (h *Handler) GetAllEmployee(c *gin.Context) {
+
+	employees, err := h.storage.GetAll()
+
+	if err != nil {
+		fmt.Printf("failed to get employee %s\n", err.Error())
+		c.JSON(http.StatusBadRequest, ErrorResponse{
+			Message: err.Error(),
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, employees)
 }
 
 func (h *Handler) DeleteEmployee(c *gin.Context) {

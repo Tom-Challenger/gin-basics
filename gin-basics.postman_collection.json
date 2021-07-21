@@ -50,6 +50,24 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "ReadAllRecodsOfEmployees",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:8080/employee",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"employee"
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

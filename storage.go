@@ -16,6 +16,7 @@ type Employee struct {
 type Storage interface {
 	Insert(*Employee)
 	Get(id int) (Employee, error)
+	GetAll() ([]Employee, error)
 	Update(id int, e Employee)
 	Delete(id int)
 }
@@ -58,6 +59,25 @@ func (s *MemoryStorage) Get(id int) (Employee, error) {
 	}
 
 	return employee, nil
+}
+
+func (s *MemoryStorage) GetAll() ([]Employee, error) {
+	s.Lock()
+
+	// Отмечаем, что комада будет вызвана не посредственно перед return
+	defer s.Unlock()
+
+	employees := []Employee{}
+
+	for _, employee := range s.data {
+		employees = append(employees, employee)
+	}
+
+	if isExist := len(employees) > 0; !isExist {
+		return nil, errors.New("employees not fount")
+	}
+
+	return employees, nil
 }
 
 func (s *MemoryStorage) Update(id int, e Employee) {

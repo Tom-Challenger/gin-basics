@@ -12,6 +12,7 @@ func main() {
 
 	router.POST("/employee", handler.CreateEmployee)
 	router.GET("employee/:id", handler.GetEmployee)
+	router.GET("/employee", handler.GetAllEmployee)
 	router.PUT("employee/:id", handler.UpdateEmployee)
 	router.DELETE("employee/:id", handler.DeleteEmployee)
 
